@@ -8,13 +8,9 @@ type StateType = {
   allSkills: SkillType[];
   mySkills: SkillType[];
 }
-type ContextType = {
+interface ContextType {
   state: StateType;
-  dispatch: React.Dispatch<any>;
-}
-type ActionType = {
-  type: string;
-  payload: SkillType;
+  dispatch: React.Dispatch<{ type: string; value: unknown }>;
 }
 
 const allSkills: SkillType[] = [
@@ -61,9 +57,9 @@ const initialState = {
   mySkills: []
 }
 
-const SkillsContext = createContext<StateType>(initialState);
+const SkillsContext = createContext<ContextType | null>(null);
 
-const skillsReducer = (state: StateType, action: ActionType) => {
+const skillsReducer = (state: StateType, action: any) => {
   switch (action.type) {
     case "ADD_SKILL":
       const isSkillExist = state.mySkills.find((skill: SkillType) => skill.id === action.payload.id)
@@ -81,6 +77,8 @@ const skillsReducer = (state: StateType, action: ActionType) => {
       return state
   }
 }
+
+
 
 const SkillsProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(skillsReducer, initialState)
