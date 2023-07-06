@@ -99,9 +99,7 @@ const MySkillsInput = () => {
             style={{
               cursor: "pointer",
               padding: "5px",
-              "_hover": {
-                backgroundColor: "#ccc",
-              },
+             
             }}
             value={skill.name}
           />
